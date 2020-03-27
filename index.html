@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form>
+      <div>
+        <input name="firstname" oninput="firstName.saveInput()">
+        <button type="button" onclick="firstName.back()">←</button>
+        <button type="button" onclick="firstName.forward()">→</button>
+      </div>
+      <div>
+        <input name="lastname" oninput="lastName.saveInput()">
+        <button type="button" onclick="lastName.back()">←</button>
+        <button type="button" onclick="lastName.forward()">→</button>
+      </div>
+    </form>
+    <script defer type="text/javascript" src="src/inputGenerator.js"></script>
+    <script defer type="text/javascript" src="src/app.js"></script>
+  </body>
+</html>

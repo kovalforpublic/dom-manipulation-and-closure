@@ -3,18 +3,29 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <style type="text/css">
+        input {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 6px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
   </head>
   <body>
     <form>
       <div>
-        <input name="firstname" oninput="firstName.saveInput()">
-        <button type="button" onclick="firstName.back()">←</button>
-        <button type="button" onclick="firstName.forward()">→</button>
+        <input name="firstname">
+        <button type="button" name="back">←</button>
+        <button type="button" name="forward">→</button>
       </div>
       <div>
-        <input name="lastname" oninput="lastName.saveInput()">
-        <button type="button" onclick="lastName.back()">←</button>
-        <button type="button" onclick="lastName.forward()">→</button>
+        <input name="lastname">
+        <button type="button" name="back">←</button>
+        <button type="button" name="forward">→</button>
       </div>
     </form>
     <script defer type="text/javascript" src="src/inputGenerator.js"></script>

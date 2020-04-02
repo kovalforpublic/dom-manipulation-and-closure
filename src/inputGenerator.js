@@ -1,47 +1,51 @@
-class Input {
-  constructor(position) {
+function InputHandler(position) {
     this.position = position;
-    this.currentIndex = 0;
-    this.array = [];
-  }
-  add(inputValue) {
-    this.array.push(inputValue);
-    this.currentIndex = this.array.length - 1;
-  }
-  next() {
-    if (this.currentIndex < this.array.length - 1) {
-      this.currentIndex += 1;
-      let input = document.getElementsByName(this.position + 'name')[0];
-      input.value = this.array[this.currentIndex];
+    this.currentIndex;
+    this.history = [];
+    this.input = document.getElementsByName(this.position + 'name')[0];
+    this.backButton = document.getElementsByName("back")[position === "first" ? 0 : 1];
+    this.forwardButton = document.getElementsByName("forward")[position === "first" ? 0 : 1];
+
+    this.bindOninput = function() {
+        this.input.addEventListener('input', () => {
+            this.addValue(this.input.value);
+        })
     }
-  }
-  previous() {
-    if (this.currentIndex !== 0) {
-      this.currentIndex -= 1;
-      let input = document.getElementsByName(this.position + 'name')[0];
-      input.value = this.array[this.currentIndex];
+    this.bindOnclick = function() {
+        this.backButton.addEventListener('click', () => {
+            this.previous();
+        })
+        this.forwardButton.addEventListener('click', () => {
+            this.next();
+        })
     }
-  }
-  saveInput() {
-    let input = document.getElementsByName(this.position + 'name')[0];
-    if (this.position === 'first') {
-      firstName.add(input.value);
-    } else {
-      lastName.add(input.value);
+    this.addValue = function(newValue) {
+        this.history.push(newValue);
+        this.currentIndex = this.history.length - 1;
     }
-  }
-  back() {
-    if (this.position === 'first') {
-      firstName.previous();
-    } else {
-      lastName.previous();
+    this.next = function() {
+        const lastElementIndex = this.history.length - 1;
+        if (this.currentIndex < lastElementIndex) {
+            this.currentIndex += 1;
+            this.input.value = this.history[this.currentIndex];
+            if (this.currentIndex === lastElementIndex) {
+                this.forwardButton.disabled = true;
+            }
+        }
+        if (this.currentIndex !== 0) {
+            this.backButton.disabled = false;
+        }
     }
-  }
-  forward() {
-    if (this.position === 'first') {
-      firstName.next();
-    } else {
-      lastName.next();
+    this.previous = function() {
+        if (this.currentIndex !== 0) {
+            this.currentIndex -= 1;
+            this.input.value = this.history[this.currentIndex];
+            if (this.currentIndex === 0) {
+                this.backButton.disabled = true;
+            }
+        }
+        if (this.currentIndex < this.history.length) {
+            this.forwardButton.disabled = false
+        }
     }
-  }
 }

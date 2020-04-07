@@ -1,8 +1,3 @@
-const firstName = new InputHandler('first');
-const lastName = new InputHandler('last');
-
-firstName.bindOninput();
-lastName.bindOninput();
-
-firstName.bindOnclick();
-lastName.bindOnclick();
+const firstName = new InputHandler('firstname');
+const lastName = new InputHandler('lastname');
+// const age = new InputHandler('age');

@@ -1,51 +1,55 @@
-function InputHandler(position) {
-    this.position = position;
-    this.currentIndex;
-    this.history = [];
-    this.input = document.getElementsByName(this.position + 'name')[0];
-    this.backButton = document.getElementsByName("back")[position === "first" ? 0 : 1];
-    this.forwardButton = document.getElementsByName("forward")[position === "first" ? 0 : 1];
+function InputHandler(className) {
+    const currentClass = className;
+    let currentIndex;
+    const history = [];
 
-    this.bindOninput = function() {
-        this.input.addEventListener('input', () => {
-            this.addValue(this.input.value);
-        })
+    const input = document.querySelector('.' + currentClass + ' > input');
+    const backButton = document.querySelector('.' + currentClass + ' > button[name=back]');
+    const forwardButton = document.querySelector('.' + currentClass + ' > button[name=forward]');
+
+    function addValue(newValue) {
+        history.push(newValue);
+        currentIndex = history.length - 1;
     }
-    this.bindOnclick = function() {
-        this.backButton.addEventListener('click', () => {
-            this.previous();
-        })
-        this.forwardButton.addEventListener('click', () => {
-            this.next();
-        })
-    }
-    this.addValue = function(newValue) {
-        this.history.push(newValue);
-        this.currentIndex = this.history.length - 1;
-    }
-    this.next = function() {
-        const lastElementIndex = this.history.length - 1;
-        if (this.currentIndex < lastElementIndex) {
-            this.currentIndex += 1;
-            this.input.value = this.history[this.currentIndex];
-            if (this.currentIndex === lastElementIndex) {
-                this.forwardButton.disabled = true;
+    function next() {
+        const lastElementIndex = history.length - 1;
+        if (currentIndex < lastElementIndex) {
+            currentIndex += 1;
+            input.value = history[currentIndex];
+            if (currentIndex === lastElementIndex) {
+                forwardButton.disabled = true;
             }
         }
-        if (this.currentIndex !== 0) {
-            this.backButton.disabled = false;
+        if (currentIndex !== 0) {
+            backButton.disabled = false;
         }
+
     }
-    this.previous = function() {
-        if (this.currentIndex !== 0) {
-            this.currentIndex -= 1;
-            this.input.value = this.history[this.currentIndex];
-            if (this.currentIndex === 0) {
-                this.backButton.disabled = true;
+
+    function previous() {
+        if (currentIndex !== 0) {
+            currentIndex -= 1;
+            input.value = history[currentIndex];
+            if (currentIndex === 0) {
+                backButton.disabled = true;
             }
         }
-        if (this.currentIndex < this.history.length) {
-            this.forwardButton.disabled = false
+        if (currentIndex < history.length) {
+            forwardButton.disabled = false
         }
     }
+
+    (() => {
+        input.addEventListener('input', () => {
+            addValue(input.value);
+        })
+    })();
+    (() => {
+        backButton.addEventListener('click', () => {
+            previous();
+        })
+        forwardButton.addEventListener('click', () => {
+            next();
+        })
+    })();
 }

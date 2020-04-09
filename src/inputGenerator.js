@@ -1,11 +1,10 @@
 function InputHandler(className) {
-    const currentClass = className;
     let currentIndex;
     const history = [];
 
-    const input = document.querySelector('.' + currentClass + ' > input');
-    const backButton = document.querySelector('.' + currentClass + ' > button[name=back]');
-    const forwardButton = document.querySelector('.' + currentClass + ' > button[name=forward]');
+    const input = document.querySelector(className + ' > input');
+    const backButton = document.querySelector(className + ' > button[name=back]');
+    const forwardButton = document.querySelector(className + ' > button[name=forward]');
 
     function addValue(newValue) {
         history.push(newValue);
@@ -16,27 +15,26 @@ function InputHandler(className) {
         if (currentIndex < lastElementIndex) {
             currentIndex += 1;
             input.value = history[currentIndex];
-            if (currentIndex === lastElementIndex) {
-                forwardButton.disabled = true;
-            }
+            isForwardDisabled();
         }
-        if (currentIndex !== 0) {
-            backButton.disabled = false;
-        }
-
+        isBackDisabled();
     }
 
     function previous() {
         if (currentIndex !== 0) {
             currentIndex -= 1;
             input.value = history[currentIndex];
-            if (currentIndex === 0) {
-                backButton.disabled = true;
-            }
+            isBackDisabled();
         }
-        if (currentIndex < history.length) {
-            forwardButton.disabled = false
-        }
+        isForwardDisabled();
+    }
+    
+    function isForwardDisabled() {
+        const lastElementIndex = history.length - 1;
+        forwardButton.disabled = currentIndex === lastElementIndex ? true : false;
+    }
+    function isBackDisabled() {
+        backButton.disabled = currentIndex === 0;
     }
 
     (() => {

@@ -39,11 +39,7 @@ function InputHandler(className) {
         backButton.disabled = currentIndex === 0;
     }
 
-    (() => {
-        input.addEventListener('input', addValue)
-    })();
-    (() => {
-        backButton.addEventListener('click', previous);
-        forwardButton.addEventListener('click', next);
-    })();
+    input.addEventListener('input', addValue)
+    backButton.addEventListener('click', previous);
+    forwardButton.addEventListener('click', next);
 }
